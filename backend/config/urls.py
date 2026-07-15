@@ -10,6 +10,7 @@ urlpatterns = [
 
     # User APIs
     path("api/users/", include("users.urls")),
+    path("api/posts/", include("posts.urls")),
 
     # JWT APIs
     path("api/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
