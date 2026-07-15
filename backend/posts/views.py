@@ -5,6 +5,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from django.shortcuts import get_object_or_404
+from rest_framework.filters import SearchFilter
+from rest_framework.filters import SearchFilter, OrderingFilter
 
 class PostDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = PostSerializer
@@ -36,6 +38,21 @@ class ToggleLikeView(APIView):
 class PostListCreateView(generics.ListCreateAPIView):
     serializer_class = PostSerializer
     permission_classes = [permissions.IsAuthenticated]
+
+    filter_backends = [SearchFilter]
+
+    search_fields = [
+        "content",
+        "author__username",
+    ]
+    
+    ordering_fields = [
+        "created_at",
+        "updated_at",
+    ]
+
+    ordering = ["-created_at"]
+
 
     def get_queryset(self):
         return Post.objects.all().order_by("-created_at")
