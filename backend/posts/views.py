@@ -5,7 +5,6 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from django.shortcuts import get_object_or_404
-from rest_framework.filters import SearchFilter
 from rest_framework.filters import SearchFilter, OrderingFilter
 
 class PostDetailView(generics.RetrieveUpdateDestroyAPIView):
@@ -39,7 +38,7 @@ class PostListCreateView(generics.ListCreateAPIView):
     serializer_class = PostSerializer
     permission_classes = [permissions.IsAuthenticated]
 
-    filter_backends = [SearchFilter]
+    filter_backends = [SearchFilter, OrderingFilter]
 
     search_fields = [
         "content",

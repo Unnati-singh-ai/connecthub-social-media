@@ -6,6 +6,8 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status, permissions
 from django.shortcuts import get_object_or_404
+from .serializers import UserSearchSerializer
+from rest_framework.filters import SearchFilter
 
 
 class UserRegistrationView(generics.CreateAPIView):
@@ -46,3 +48,11 @@ class ToggleFollowView(APIView):
             {"message": "User followed"},
             status=status.HTTP_200_OK,
         )
+    
+class UserSearchView(generics.ListAPIView):
+    queryset = CustomUser.objects.all()
+    serializer_class = UserSearchSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    filter_backends = [SearchFilter]
+    search_fields = ["username", "email"]   
