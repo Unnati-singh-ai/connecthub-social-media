@@ -18,11 +18,12 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 class UserSearchSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ["id", "username", "email"]
-
-
-
-
+        fields = [
+            "id",
+            "username",
+            "email",
+            "profile_picture",
+        ]
 class UserDetailSerializer(serializers.ModelSerializer):
     followers_count = serializers.SerializerMethodField()
     following_count = serializers.SerializerMethodField()
@@ -34,10 +35,12 @@ class UserDetailSerializer(serializers.ModelSerializer):
             "id",
             "username",
             "email",
+            "bio",
+            "profile_picture",
             "followers_count",
             "following_count",
             "is_following",
-        ]
+    ]
 
     def get_followers_count(self, obj):
         return obj.followers.count()
@@ -52,3 +55,12 @@ class UserDetailSerializer(serializers.ModelSerializer):
             return obj in request.user.following.all()
 
         return False
+
+class UserProfileUpdateSerializer(serializers.ModelSerializer):
+        class Meta:
+            model = CustomUser
+            fields = [
+                "username",
+                 "bio",
+                 "profile_picture",
+                ]

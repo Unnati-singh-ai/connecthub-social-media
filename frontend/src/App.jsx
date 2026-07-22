@@ -8,6 +8,7 @@ import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import Search from "./pages/Search";
 import UserProfile from "./pages/UserProfile";
+import EditProfile from "./pages/EditProfile";
 
 
 function App() {
@@ -49,6 +50,15 @@ function App() {
         element={
           <ProtectedRoute>
             <UserProfile />
+          </ProtectedRoute>
+        }
+/>
+
+      <Route
+        path="/profile/edit"
+        element={
+          <ProtectedRoute>
+            <EditProfile />
           </ProtectedRoute>
         }
 />

@@ -3,6 +3,7 @@ import api from "../api/axios";
 import toast from "react-hot-toast";
 import Navbar from "../components/Navbar";
 import PostCard from "../components/PostCard";
+import { Link } from "react-router-dom";
 
 function Profile() {
   const [profile, setProfile] = useState(null);
@@ -66,6 +67,19 @@ function Profile() {
         <h1 className="text-3xl font-bold mb-6">
           My Profile
         </h1>
+        <div className="flex justify-center mb-6">
+          {profile.profile_picture ? (
+            <img
+              src={`http://127.0.0.1:8000${profile.profile_picture}`}
+              alt="Profile"
+              className="w-32 h-32 rounded-full object-cover border-4 border-blue-500"
+            />
+          ) : (
+            <div className="w-32 h-32 rounded-full bg-gray-300 flex items-center justify-center">
+              No Image
+            </div>
+          )}
+        </div>
 
         <div className="space-y-4">
 
@@ -81,6 +95,11 @@ function Profile() {
             <h2 className="text-lg">
               {profile.email}
             </h2>
+          </div>
+
+          <div>
+            <p className="text-gray-500">Bio</p>
+            <p>{profile.bio || "No bio added yet."}</p>
           </div>
 
           <div className="flex gap-10 mt-6">
@@ -100,6 +119,13 @@ function Profile() {
             </div>
 
           </div>
+
+          <Link
+            to="/profile/edit"
+            className="inline-block mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+          >
+            Edit Profile
+          </Link>
 
         </div>
               </div>

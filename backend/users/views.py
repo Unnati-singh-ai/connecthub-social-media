@@ -9,7 +9,9 @@ from django.shortcuts import get_object_or_404
 from .serializers import UserSearchSerializer
 from rest_framework.filters import SearchFilter
 from .serializers import UserDetailSerializer
-
+from .serializers import (
+    UserProfileUpdateSerializer,
+)
 
 class UserRegistrationView(generics.CreateAPIView):
     queryset = CustomUser.objects.all()
@@ -23,9 +25,18 @@ class UserProfileView(APIView):
             "id": request.user.id,
             "username": request.user.username,
             "email": request.user.email,
+            "bio": request.user.bio,
+            "profile_picture": request.user.profile_picture.url if request.user.profile_picture else None,
             "followers_count": request.user.followers.count(),
             "following_count": request.user.following.count(),
         })
+
+class UserProfileUpdateView(generics.RetrieveUpdateAPIView):
+    serializer_class = UserProfileUpdateSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_object(self):
+        return self.request.user
 
 class UserDetailView(generics.RetrieveAPIView):
     queryset = CustomUser.objects.all()
