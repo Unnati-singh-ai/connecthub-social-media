@@ -6,6 +6,9 @@ import Feed from "./pages/Feed";
 import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./routes/ProtectedRoute";
+import Search from "./pages/Search";
+import UserProfile from "./pages/UserProfile";
+
 
 function App() {
   return (
@@ -22,6 +25,7 @@ function App() {
         }
       />
 
+
       <Route
         path="/profile"
         element={
@@ -32,6 +36,22 @@ function App() {
       />
 
       <Route path="*" element={<NotFound />} />
+      <Route
+        path="/search"
+        element={
+          <ProtectedRoute>
+            <Search />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/users/:id"
+        element={
+          <ProtectedRoute>
+            <UserProfile />
+          </ProtectedRoute>
+        }
+/>
     </Routes>
   );
 }

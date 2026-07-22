@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from django.shortcuts import get_object_or_404
 from rest_framework.filters import SearchFilter, OrderingFilter
+from rest_framework.permissions import IsAuthenticated
 
 class PostDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = PostSerializer
@@ -67,3 +68,12 @@ class FeedView(generics.ListAPIView):
         return Post.objects.filter(
             author__in=self.request.user.following.all()
         ).order_by("-created_at")
+
+
+class UserPostsView(generics.ListAPIView):
+    serializer_class = PostSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        user_id = self.kwargs["pk"]
+        return Post.objects.filter(author_id=user_id).order_by("-created_at")

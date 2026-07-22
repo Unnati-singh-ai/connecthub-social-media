@@ -32,6 +32,7 @@ function Navbar() {
           >
             Logout
           </button>
+          <Link to="/search">Search</Link>
         </div>
       </div>
     </nav>

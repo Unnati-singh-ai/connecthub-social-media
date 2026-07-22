@@ -8,6 +8,7 @@ from rest_framework import status, permissions
 from django.shortcuts import get_object_or_404
 from .serializers import UserSearchSerializer
 from rest_framework.filters import SearchFilter
+from .serializers import UserDetailSerializer
 
 
 class UserRegistrationView(generics.CreateAPIView):
@@ -25,6 +26,11 @@ class UserProfileView(APIView):
             "followers_count": request.user.followers.count(),
             "following_count": request.user.following.count(),
         })
+
+class UserDetailView(generics.RetrieveAPIView):
+    queryset = CustomUser.objects.all()
+    serializer_class = UserDetailSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
 class ToggleFollowView(APIView):
     permission_classes = [permissions.IsAuthenticated]
