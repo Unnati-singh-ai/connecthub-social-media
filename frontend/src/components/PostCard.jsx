@@ -1,10 +1,13 @@
 import { useState } from "react";
 import api from "../api/axios";
 import toast from "react-hot-toast";
+import Comments from "./Comments";
 
-function PostCard({ post }) {
+function PostCard({ post, posts, setPosts  }) {
   const [liked, setLiked] = useState(post.is_liked);
   const [likesCount, setLikesCount] = useState(post.likes_count);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedContent, setEditedContent] = useState(post.content);
 
   const handleLike = async () => {
     try {
@@ -32,12 +35,79 @@ function PostCard({ post }) {
       toast.error("Something went wrong.");
     }
   };
+  const handleDelete = async () => {
+  const confirmDelete = window.confirm(
+    "Are you sure you want to delete this post?"
+  );
+
+  if (!confirmDelete) return;
+
+  try {
+    const token = localStorage.getItem("access");
+
+    await api.delete(`/posts/${post.id}/`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    // Remove the deleted post from the UI
+    setPosts(posts.filter((p) => p.id !== post.id));
+
+    toast.success("Post deleted successfully!");
+  } catch (error) {
+    console.log(error);
+    toast.error("Failed to delete post.");
+  }
+};
+const handleUpdate = async () => {
+  try {
+    const token = localStorage.getItem("access");
+
+    const response = await api.patch(
+      `/posts/${post.id}/`,
+      {
+        content: editedContent,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    // Update the post in the UI
+    setPosts(
+      posts.map((p) =>
+        p.id === post.id ? response.data : p
+      )
+    );
+
+    setIsEditing(false);
+
+    toast.success("Post updated successfully!");
+  } catch (error) {
+    console.log(error);
+    toast.error("Failed to update post.");
+  }
+};
+
+const loggedInUser = localStorage.getItem("username");
 
   return (
     <div className="bg-white rounded-lg shadow p-4 mb-6">
       <h2 className="font-bold text-lg">{post.author}</h2>
 
-      <p className="mt-2">{post.content}</p>
+    {isEditing ? (
+  <textarea
+    value={editedContent}
+    onChange={(e) => setEditedContent(e.target.value)}
+    className="w-full border rounded-lg p-2 mt-2"
+    rows={3}
+  />
+) : (
+  <p className="mt-2">{post.content}</p>
+)}
 
       {post.image && (
         <img
@@ -47,22 +117,66 @@ function PostCard({ post }) {
         />
       )}
 
-      <div className="flex items-center justify-between mt-4">
-        <button
-          onClick={handleLike}
-          className="text-blue-600 font-semibold hover:text-blue-800"
-        >
-          {liked ? "❤️ Liked" : "🤍 Like"}
-        </button>
+    <div className="flex items-center justify-between mt-4">
+      
+     <div className="flex gap-4">
+    <button
+      onClick={handleLike}
+      className="text-blue-600 font-semibold hover:text-blue-800"
+    >
+      {liked ? "❤️ Liked" : "🤍 Like"}
+    </button>
 
-        <span className="text-gray-600">
-          {likesCount} Likes
-        </span>
-      </div>
+{loggedInUser === post.author && (
+  isEditing ? (
+    <>
+      <button
+        onClick={handleUpdate}
+        className="text-green-600 font-semibold hover:text-green-800"
+      >
+        💾 Save
+      </button>
+
+      <button
+        onClick={() => {
+          setEditedContent(post.content);
+          setIsEditing(false);
+        }}
+        className="text-gray-600 font-semibold hover:text-gray-800"
+      >
+        ❌ Cancel
+      </button>
+    </>
+  ) : (
+    <button
+      onClick={() => setIsEditing(true)}
+      className="text-green-600 font-semibold hover:text-green-800"
+    >
+      ✏️ Edit
+    </button>
+  )
+)}
+
+    {loggedInUser === post.author && (
+      
+  <button
+    onClick={handleDelete}
+    className="text-red-600 font-semibold hover:text-red-800"
+  >
+    🗑 Delete
+  </button>
+)}
+  </div>
+
+  <span className="text-gray-600">
+    {likesCount} Likes
+  </span>
+</div>
 
       <p className="text-sm text-gray-500 mt-3">
         {new Date(post.created_at).toLocaleString()}
       </p>
+      <Comments postId={post.id} />
     </div>
   );
 }

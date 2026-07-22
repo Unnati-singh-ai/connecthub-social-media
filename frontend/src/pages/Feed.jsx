@@ -48,6 +48,8 @@ function Feed() {
         <PostCard
             key={post.id}
             post={post}
+            posts={posts}
+            setPosts={setPosts}
         />
     ))
  )}

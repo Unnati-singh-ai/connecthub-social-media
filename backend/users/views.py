@@ -22,6 +22,8 @@ class UserProfileView(APIView):
             "id": request.user.id,
             "username": request.user.username,
             "email": request.user.email,
+            "followers_count": request.user.followers.count(),
+            "following_count": request.user.following.count(),
         })
 
 class ToggleFollowView(APIView):
