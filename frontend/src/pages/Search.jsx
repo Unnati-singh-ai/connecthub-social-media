@@ -6,13 +6,16 @@ function Search() {
   const [search, setSearch] = useState("");
   const [users, setUsers] = useState([]);
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const handleSearch = async (e) => {
     const value = e.target.value;
     setSearch(value);
+    setLoading(true);
 
     if (!value.trim()) {
       setUsers([]);
+      setLoading(false);
       return;
     }
 
@@ -28,6 +31,8 @@ function Search() {
       setUsers(res.data.results || res.data);
     } catch (err) {
       console.log(err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -54,20 +59,43 @@ function Search() {
       />
 
       <div className="mt-8 space-y-5">
+        {search.trim() === "" && (
+  <div className="bg-white rounded-2xl shadow-md p-10 text-center">
+    <div className="text-6xl mb-4">🔍</div>
+
+    <h2 className="text-2xl font-bold text-gray-700">
+      Search ConnectHub
+    </h2>
+
+    <p className="text-gray-500 mt-3">
+      Search by username to discover and connect with people.
+    </p>
+  </div>
+)}
         {search && users.length === 0 && (
           <div className="bg-white rounded-2xl shadow-md p-8 text-center text-gray-500">
             <p className="text-lg font-semibold">No users found 😔</p>
             <p className="mt-2">Try searching with another username.</p>
           </div>
         )}
+
+            {loading && (
+        <div className="bg-white rounded-2xl shadow-md p-8 text-center">
+          <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
+
+          <p className="mt-4 text-gray-600">
+            Searching...
+          </p>
+        </div>
+      )}
         {users.map((user) => {
-            console.log(user.profile_picture);
+            
 
         return (
         <div
   key={user.id}
   onClick={() => navigate(`/users/${user.id}`)}
-  className="bg-white rounded-2xl shadow-md hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer p-5 flex items-center justify-between"
+  className="bg-white rounded-2xl shadow-md hover:shadow-xl hover:-translate-y-2 hover:scale-[1.02] transition-all duration-300 cursor-pointer p-5 flex items-center justify-between"
 >
   <div className="flex items-center gap-4">
 

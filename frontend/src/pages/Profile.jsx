@@ -5,6 +5,7 @@ import Navbar from "../components/Navbar";
 import PostCard from "../components/PostCard";
 import { Link } from "react-router-dom";
 import FollowersModal from "../components/FollowersModal";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 function Profile() {
   const [profile, setProfile] = useState(null);
@@ -59,8 +60,13 @@ function Profile() {
   }
 };
   if (!profile) {
-    return <h1 className="text-center mt-10">Loading...</h1>;
-  }
+  return (
+    <>
+      <Navbar />
+      <LoadingSpinner />
+    </>
+  );
+}
 
   return (
     <>
