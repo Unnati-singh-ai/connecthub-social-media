@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import api from "../api/axios";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 function EditProfile() {
   const navigate = useNavigate();
-
+  const [preview, setPreview] = useState("");
   const [formData, setFormData] = useState({
     username: "",
     bio: "",
@@ -30,6 +31,11 @@ function EditProfile() {
         bio: res.data.bio || "",
         profile_picture: null,
       });
+      setPreview(
+      res.data.profile_picture
+        ? `http://127.0.0.1:8000${res.data.profile_picture}`
+        : ""
+        );
     } catch (err) {
       console.log(err);
     }
@@ -42,6 +48,9 @@ function EditProfile() {
       ...prev,
       [name]: files ? files[0] : value,
     }));
+    if (files) {
+    setPreview(URL.createObjectURL(files[0]));
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -60,15 +69,18 @@ function EditProfile() {
       }
 
       await api.put("/users/profile/edit/", data, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data",
-        },
-      });
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        });
 
-      alert("Profile Updated Successfully!");
+        // Update the username stored in the browser
+        localStorage.setItem("username", formData.username);
 
-      navigate("/profile");
+        toast.success("Profile updated successfully!");
+
+        navigate("/profile");
     } catch (err) {
       console.log(err);
     }
@@ -97,6 +109,20 @@ function EditProfile() {
           rows="4"
           className="w-full border p-3 rounded"
         />
+
+        <div className="flex justify-center">
+         {preview ? (
+          <img
+              src={preview}
+              alt="Preview"
+              className="w-32 h-32 rounded-full object-cover border-4 border-blue-500"
+          />
+          ) : (
+              <div className="w-32 h-32 rounded-full bg-gray-300 flex items-center justify-center">
+                  No Image
+              </div>
+          )}
+       </div>
 
         <input
           type="file"

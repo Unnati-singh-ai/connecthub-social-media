@@ -6,6 +6,10 @@ import os
 class PostSerializer(serializers.ModelSerializer):
 
     author = serializers.ReadOnlyField(source="author.username")
+    author_id = serializers.ReadOnlyField(source="author.id")
+    profile_picture = serializers.ImageField(
+    source="author.profile_picture",
+    read_only=True)
     likes_count = serializers.SerializerMethodField()
     is_liked = serializers.SerializerMethodField()
 
@@ -44,6 +48,8 @@ class PostSerializer(serializers.ModelSerializer):
         fields = [
             "id",
             "author",
+            "author_id",
+            "profile_picture",
             "content",
             "image",
             "likes_count",

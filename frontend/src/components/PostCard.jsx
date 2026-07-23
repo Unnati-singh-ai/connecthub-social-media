@@ -2,13 +2,14 @@ import { useState } from "react";
 import api from "../api/axios";
 import toast from "react-hot-toast";
 import Comments from "./Comments";
+import { useNavigate } from "react-router-dom";
 
 function PostCard({ post, posts, setPosts  }) {
   const [liked, setLiked] = useState(post.is_liked);
   const [likesCount, setLikesCount] = useState(post.likes_count);
   const [isEditing, setIsEditing] = useState(false);
   const [editedContent, setEditedContent] = useState(post.content);
-
+  const navigate = useNavigate();
   const handleLike = async () => {
     try {
       const token = localStorage.getItem("access");
@@ -96,7 +97,36 @@ const loggedInUser = localStorage.getItem("username");
 
   return (
     <div className="bg-white rounded-lg shadow p-4 mb-6">
-      <h2 className="font-bold text-lg">{post.author}</h2>
+     <div className="flex items-center justify-between mb-4">
+  <div className="flex items-center gap-3">
+
+    {post.profile_picture ? (
+      <img
+        src={`http://127.0.0.1:8000${post.profile_picture}`}
+        alt="Profile"
+        className="w-12 h-12 rounded-full object-cover border"
+      />
+    ) : (
+      <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center text-gray-600 font-bold">
+        {post.author.charAt(0).toUpperCase()}
+      </div>
+    )}
+
+    <div>
+      <h2
+        onClick={() => navigate(`/users/${post.author_id}`)}
+        className="text-lg font-bold text-blue-600 cursor-pointer hover:underline"
+      >
+        @{post.author}
+      </h2>
+
+      <p className="text-sm text-gray-500">
+        {new Date(post.created_at).toLocaleString()}
+      </p>
+    </div>
+
+  </div>
+</div>
 
     {isEditing ? (
   <textarea
@@ -173,9 +203,7 @@ const loggedInUser = localStorage.getItem("username");
   </span>
 </div>
 
-      <p className="text-sm text-gray-500 mt-3">
-        {new Date(post.created_at).toLocaleString()}
-      </p>
+     
       <Comments postId={post.id} />
     </div>
   );
