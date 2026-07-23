@@ -39,7 +39,8 @@ function Feed() {
   return (
     <>
         <Navbar />
-    <div className="max-w-2xl mx-auto mt-10">
+    <div className="min-h-screen bg-gray-300 py-8">
+      <div className="max-w-4xl mx-auto px-4 py-8">
         <CreatePost onPostCreated={fetchPosts} />
       {posts.length === 0 ? (
         <p>No posts available.</p>
@@ -54,6 +55,8 @@ function Feed() {
     ))
  )}
     </div>
+    </div>
+
      </>
   );
  

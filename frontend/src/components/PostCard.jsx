@@ -96,26 +96,28 @@ const handleUpdate = async () => {
 const loggedInUser = localStorage.getItem("username");
 
   return (
-    <div className="bg-white rounded-lg shadow p-4 mb-6">
-     <div className="flex items-center justify-between mb-4">
-  <div className="flex items-center gap-3">
+    <div className="bg-gray-100 rounded-3xl shadow-lg hover:shadow-2xl border border-blue-300 transition-all duration-300 overflow-hidden mb-8 p-8">
+    <div className="flex items-center justify-between p-10">
+
+  <div className="flex items-center gap-4">
 
     {post.profile_picture ? (
       <img
         src={`http://127.0.0.1:8000${post.profile_picture}`}
-        alt="Profile"
-        className="w-12 h-12 rounded-full object-cover border"
+        alt={post.author}
+        className="w-14 h-14 rounded-full object-cover border-2 border-blue-500 shadow"
       />
     ) : (
-      <div className="w-12 h-12 rounded-full bg-gray-300 flex items-center justify-center text-gray-600 font-bold">
+      <div className="w-14 h-14 rounded-full bg-blue-600 text-white flex items-center justify-center text-xl font-bold">
         {post.author.charAt(0).toUpperCase()}
       </div>
     )}
 
     <div>
+
       <h2
         onClick={() => navigate(`/users/${post.author_id}`)}
-        className="text-lg font-bold text-blue-600 cursor-pointer hover:underline"
+        className="font-bold text-lg cursor-pointer hover:text-blue-600"
       >
         @{post.author}
       </h2>
@@ -123,9 +125,11 @@ const loggedInUser = localStorage.getItem("username");
       <p className="text-sm text-gray-500">
         {new Date(post.created_at).toLocaleString()}
       </p>
+
     </div>
 
   </div>
+
 </div>
 
     {isEditing ? (
@@ -136,23 +140,29 @@ const loggedInUser = localStorage.getItem("username");
     rows={3}
   />
 ) : (
-  <p className="mt-2">{post.content}</p>
+  <p className="px-5 pb-4 text-gray-700 leading-8 text-[17px] whitespace-pre-wrap">
+  {post.content}
+</p>
 )}
 
       {post.image && (
         <img
           src={post.image}
           alt="Post"
-          className="mt-4 rounded-lg w-full"
+          className="w-full max-h-[600px] object-cover hover:scale-[1.02] transition duration-500"
         />
       )}
 
-    <div className="flex items-center justify-between mt-4">
+    <div className="flex items-center justify-between px-5 py-4 border-t">
       
      <div className="flex gap-4">
     <button
       onClick={handleLike}
-      className="text-blue-600 font-semibold hover:text-blue-800"
+      className={`px-5 py-2 rounded-full font-semibold transition ${
+        liked
+        ? "bg-red-100 text-red-600"
+        : "bg-gray-100 hover:bg-gray-200"
+        }`}
     >
       {liked ? "❤️ Liked" : "🤍 Like"}
     </button>
@@ -162,7 +172,7 @@ const loggedInUser = localStorage.getItem("username");
     <>
       <button
         onClick={handleUpdate}
-        className="text-green-600 font-semibold hover:text-green-800"
+        className="px-5 py-2 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition"
       >
         💾 Save
       </button>
@@ -172,7 +182,7 @@ const loggedInUser = localStorage.getItem("username");
           setEditedContent(post.content);
           setIsEditing(false);
         }}
-        className="text-gray-600 font-semibold hover:text-gray-800"
+        className="px-5 py-2 rounded-full bg-gray-200 hover:bg-gray-300 transition"
       >
         ❌ Cancel
       </button>
@@ -180,7 +190,7 @@ const loggedInUser = localStorage.getItem("username");
   ) : (
     <button
       onClick={() => setIsEditing(true)}
-      className="text-green-600 font-semibold hover:text-green-800"
+      className="px-5 py-2 rounded-full bg-green-100 text-green-700 hover:bg-green-200 transition"
     >
       ✏️ Edit
     </button>
@@ -191,16 +201,16 @@ const loggedInUser = localStorage.getItem("username");
       
   <button
     onClick={handleDelete}
-    className="text-red-600 font-semibold hover:text-red-800"
+    className="px-5 py-2 rounded-full bg-red-100 text-red-700 hover:bg-red-200 transition"
   >
     🗑 Delete
   </button>
 )}
   </div>
 
-  <span className="text-gray-600">
-    {likesCount} Likes
-  </span>
+<span className="font-semibold text-gray-700">
+  ❤️ {likesCount} {likesCount === 1 ? "Like" : "Likes"}
+</span>
 </div>
 
      

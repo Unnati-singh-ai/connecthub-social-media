@@ -6,6 +6,8 @@ from .views import (
     ToggleFollowView,
     UserDetailView,
     UserProfileUpdateView,
+    FollowersListView,
+    FollowingListView,
 )
 
 urlpatterns = [
@@ -15,4 +17,15 @@ urlpatterns = [
     path("<int:pk>/", UserDetailView.as_view(), name="user-detail"),
     path("<int:pk>/follow/", ToggleFollowView.as_view(), name="toggle-follow"),
     path("search/", UserSearchView.as_view(), name="user-search"),
+    path(
+    "<int:pk>/followers/",
+    FollowersListView.as_view(),
+    name="followers-list",
+),
+
+    path(
+        "<int:pk>/following/",
+        FollowingListView.as_view(),
+        name="following-list",
+    ),
 ]   

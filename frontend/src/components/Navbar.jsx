@@ -35,23 +35,26 @@ const fetchProfile = async () => {
 };
 
   return (
-    <nav className="bg-blue-600 text-white shadow">
+    <nav className="bg-blue-500 text-white shadow">
       <div className="max-w-5xl mx-auto flex items-center justify-between px-6 py-4">
-        <h1 className="text-2xl font-bold">
+        <Link
+          to="/feed"
+          className="text-3xl font-extrabold tracking-wide"
+        >
           ConnectHub
-        </h1>
+        </Link>
 
-      <div className="flex items-center gap-6">
+     <div className="flex items-center gap-8 text-lg">
 
-  <Link to="/feed" className="hover:underline">
+  <Link to="/feed" className="hover:text-blue-200 transition duration-200">
     Feed
   </Link>
 
-  <Link to="/search" className="hover:underline">
+  <Link to="/search" className="hover:text-blue-200 transition duration-200">
     Search
   </Link>
 
-  <Link to="/profile" className="flex items-center gap-2">
+  <Link to="/profile" className="flex items-center gap-2 hover:text-blue-200 transition">
 
     {profile?.profile_picture ? (
       <img
@@ -73,7 +76,7 @@ const fetchProfile = async () => {
 
   <button
     onClick={handleLogout}
-    className="bg-red-500 px-4 py-2 rounded-lg hover:bg-red-600 transition"
+    className="bg-red-500 px-5 py-2 rounded-full hover:bg-red-600 transition shadow"
   >
     Logout
   </button>

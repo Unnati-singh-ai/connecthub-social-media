@@ -50,34 +50,58 @@ function CreatePost({ onPostCreated }) {
     }
   };
 
-  return (
-    <div className="bg-white shadow rounded-lg p-4 mb-6">
-      <form onSubmit={handleSubmit}>
-        <textarea
-          placeholder="What's on your mind?"
-          className="w-full border rounded-lg p-3 mb-4"
-          rows={4}
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-        />
+ return (
+  <div className="bg-gray-100 rounded-2xl shadow-lg border border-gray-200 p-6 mb-8">
 
-        <input
-          type="file"
-          accept="image/*"
-          onChange={(e) => setImage(e.target.files[0])}
-          className="mb-4"
-        />
+    <h2 className="text-xl font-bold mb-4 text-gray-800">
+      ✨ Create a New Post
+    </h2>
+
+    <form onSubmit={handleSubmit}>
+
+      <textarea
+        placeholder="What's on your mind today?"
+        className="w-full border border-gray-300 rounded-xl p-4 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none transition"
+        rows={5}
+        value={content}
+        onChange={(e) => setContent(e.target.value)}
+      />
+
+      {image && (
+        <p className="mt-3 text-sm text-green-600">
+          📷 {image.name}
+        </p>
+      )}
+
+      <div className="flex justify-between items-center mt-5">
+
+        <label className="cursor-pointer bg-gray-100 hover:bg-gray-200 px-4 py-2 rounded-xl transition">
+
+          📷 Add Photo
+
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) => setImage(e.target.files[0])}
+            className="hidden"
+          />
+
+        </label>
 
         <button
           type="submit"
           disabled={loading}
-          className="bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700"
+          className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-xl font-semibold transition disabled:opacity-50"
         >
-          {loading ? "Posting..." : "Create Post"}
+          {loading ? "Posting..." : "🚀 Create Post"}
         </button>
-      </form>
-    </div>
-  );
+
+      </div>
+
+    </form>
+
+  </div>
+);
 }
 
 export default CreatePost;

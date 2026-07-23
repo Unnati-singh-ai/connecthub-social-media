@@ -88,25 +88,29 @@ const loggedInUser = localStorage.getItem("username");
 
   return (
     <div className="mt-4">
-      <h3 className="font-semibold mb-2">Comments</h3>
+      <h3 className="text-lg font-bold text-gray-800 mt-6 mb-4">Comments</h3>
 
       {comments.length === 0 ? (
-        <p className="text-gray-500 text-sm">No comments yet.</p>
+        <div className="bg-gray-50 border border-dashed border-gray-300 rounded-xl p-4 text-center text-gray-500">
+          No comments yet. Be the first to comment 💬
+          </div>
       ) : (
         comments.map((comment) => (
           <div
             key={comment.id}
-            className="border-b py-2"
+            className="bg-gray-50 rounded-xl p-3 mb-3 border border-gray-200"
           >
-            <p className="font-semibold">
+            <p className="font-bold text-blue-600">
               {comment.author}
             </p>
 
-            <p>{comment.content}</p>
+           <p className="mt-1 text-gray-700 leading-6">
+              {comment.content}
+            </p>
             {loggedInUser === comment.author && (
                 <button
                     onClick={() => handleDeleteComment(comment.id)}
-                    className="text-red-600 text-sm mt-1 hover:text-red-800"
+                    className="mt-2 text-xs bg-red-100 text-red-600 px-3 py-1 rounded-full hover:bg-red-200 transition"
                 >
                     🗑 Delete
                 </button>
@@ -114,18 +118,18 @@ const loggedInUser = localStorage.getItem("username");
           </div>
         ))
       )}
-      <div className="mt-4">
+     <div className="mt-6 mb-6 .">
   <input
     type="text"
     value={content}
     onChange={(e) => setContent(e.target.value)}
     placeholder="Write a comment..."
-    className="w-full border rounded-lg p-2"
+    className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
   />
 
   <button
     onClick={handleCommentSubmit}
-    className="mt-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+    className="mt-3 mr-6 ml-0 bg-blue-600 text-white px-6 py-2 rounded-xl hover:bg-blue-700 transition"
   >
     Post Comment
   </button>

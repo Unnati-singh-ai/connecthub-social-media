@@ -74,4 +74,20 @@ class UserSearchView(generics.ListAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
     filter_backends = [SearchFilter]
-    search_fields = ["username", "email"]   
+    search_fields = ["username", "email"]  
+
+class FollowersListView(generics.ListAPIView):
+    serializer_class = UserSearchSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        user = get_object_or_404(CustomUser, pk=self.kwargs["pk"])
+        return user.followers.all() 
+
+class FollowingListView(generics.ListAPIView):
+    serializer_class = UserSearchSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        user = get_object_or_404(CustomUser, pk=self.kwargs["pk"])
+        return user.following.all()
