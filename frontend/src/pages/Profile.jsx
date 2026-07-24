@@ -80,7 +80,7 @@ function Profile() {
         <div className="flex justify-center mb-6">
           {profile.profile_picture ? (
             <img
-              src={`http://127.0.0.1:8000${profile.profile_picture}`}
+              src={`https://connecthub-backend-dulc.onrender.com${profile.profile_picture}`}
               alt="Profile"
               className="w-40 h-40 rounded-full object-cover border-4 border-blue-500 shadow-lg"
             />

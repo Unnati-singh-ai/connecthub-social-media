@@ -103,7 +103,7 @@ const loggedInUser = localStorage.getItem("username");
 
     {post.profile_picture ? (
       <img
-        src={`http://127.0.0.1:8000${post.profile_picture}`}
+        src={`https://connecthub-backend-dulc.onrender.com${post.profile_picture}`}
         alt={post.author}
         className="w-14 h-14 rounded-full object-cover border-2 border-blue-500 shadow"
       />
