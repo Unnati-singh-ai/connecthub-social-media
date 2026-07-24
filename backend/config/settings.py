@@ -142,7 +142,7 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 CORS_ALLOWED_ORIGINS = config(
     "CORS_ALLOWED_ORIGINS",
     default="http://localhost:5173,https://connecthub-frontend-rdwt.onrender.com",
-    cast=lambda v: [s.strip() for s in v.split(",")],
+    cast=lambda v: [s.strip() for s in v.split(",")]
 )
 
 AUTH_USER_MODEL = "users.CustomUser"

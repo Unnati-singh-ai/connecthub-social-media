@@ -35,8 +35,6 @@ function App() {
           </ProtectedRoute>
         }
       />
-
-      <Route path="*" element={<NotFound />} />
       <Route
         path="/search"
         element={
