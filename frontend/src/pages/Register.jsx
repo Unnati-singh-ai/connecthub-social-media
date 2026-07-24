@@ -116,16 +116,18 @@ function Register() {
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
 
-          
-
-        </form>
-        <button
+          <button
             type="submit"
             disabled={loading}
             className="w-full py-4 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white font-bold text-lg shadow-lg hover:scale-105 hover:shadow-2xl transition-all duration-300 disabled:opacity-70"
           >
             {loading ? "Creating Account..." : "Create Account 🚀"}
           </button>
+
+          
+
+        </form>
+        
 
         <p className="text-center mt-6 text-gray-600">
           Already have an account?{" "}
