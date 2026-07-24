@@ -33,9 +33,15 @@ function Register() {
 
       navigate("/");
     } catch (error) {
-      console.log(error.response?.data);
-      toast.error("Registration failed");
-    } finally {
+        console.log("Backend Error:", error.response?.data);
+
+        toast.error(
+          error.response?.data?.detail ||
+          JSON.stringify(error.response?.data) ||
+          "Registration failed"
+  );
+}
+    finally {
       setLoading(false);
     }
   };
