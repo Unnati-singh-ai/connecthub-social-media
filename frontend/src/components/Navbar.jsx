@@ -57,16 +57,16 @@ const fetchProfile = async () => {
   <Link to="/profile" className="flex items-center gap-2 hover:text-blue-200 transition">
 
     {profile?.profile_picture ? (
-      <img
-        src={`http://127.0.0.1:8000${profile.profile_picture}`}
-        alt="Profile"
-        className="w-10 h-10 rounded-full object-cover border-2 border-white"
-      />
-    ) : (
-      <div className="w-10 h-10 rounded-full bg-white text-blue-600 flex items-center justify-center font-bold">
-        {profile?.username?.charAt(0).toUpperCase() || "U"}
-      </div>
-    )}
+  <img
+    src={profile.profile_picture}
+    alt="Profile"
+    className="w-10 h-10 rounded-full object-cover border-2 border-white"
+  />
+) : (
+  <div className="w-10 h-10 rounded-full bg-white text-blue-600 flex items-center justify-center font-bold">
+    {profile?.username?.charAt(0).toUpperCase() || "U"}
+  </div>
+)}
 
     <span className="hover:underline">
       Profile
