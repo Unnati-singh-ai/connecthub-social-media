@@ -101,13 +101,13 @@ const loggedInUser = localStorage.getItem("username");
 
   <div className="flex items-center gap-4">
 
-    {post.profile_picture ? (
-      <img
-        src={`https://connecthub-backend-dulc.onrender.com${post.profile_picture}`}
-        alt={post.author}
-        className="w-14 h-14 rounded-full object-cover border-2 border-blue-500 shadow"
-      />
-    ) : (
+   {post.profile_picture ? (
+  <img
+    src={post.profile_picture}
+    alt={post.author}
+    className="w-14 h-14 rounded-full object-cover border-2 border-blue-500 shadow"
+  />
+) : (
       <div className="w-14 h-14 rounded-full bg-blue-600 text-white flex items-center justify-center text-xl font-bold">
         {post.author.charAt(0).toUpperCase()}
       </div>
