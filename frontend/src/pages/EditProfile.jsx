@@ -31,11 +31,7 @@ function EditProfile() {
         bio: res.data.bio || "",
         profile_picture: null,
       });
-      setPreview(
-      res.data.profile_picture
-        ? `http://127.0.0.1:8000${res.data.profile_picture}`
-        : ""
-        );
+      setPreview(res.data.profile_picture || "");
     } catch (err) {
       console.log(err);
     }
