@@ -11,7 +11,10 @@ class PostSerializer(serializers.ModelSerializer):
     source="author.profile_picture",
     read_only=True)
 
-    image = serializers.SerializerMethodField()
+    image = serializers.ImageField(
+    required=False,
+    allow_null=True,
+    )
 
     likes_count = serializers.SerializerMethodField()
     is_liked = serializers.SerializerMethodField()
@@ -45,13 +48,7 @@ class PostSerializer(serializers.ModelSerializer):
             return obj.likes.filter(id=request.user.id).exists()
 
         return False
-    def get_image(self, obj):
-     if obj.image:
-        try:
-            return obj.image.url
-        except Exception:
-            return None
-     return None
+    
 
     class Meta:
         model = Post
