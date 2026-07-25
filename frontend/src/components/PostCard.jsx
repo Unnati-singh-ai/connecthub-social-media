@@ -95,6 +95,9 @@ const handleUpdate = async () => {
 
 const loggedInUser = localStorage.getItem("username");
 
+console.log("Post ID:", post.id);
+console.log("Post Image:", post.image);
+
   return (
     <div className="bg-gray-100 rounded-3xl shadow-lg hover:shadow-2xl border border-blue-300 transition-all duration-300 overflow-hidden mb-8 p-8">
     <div className="flex items-center justify-between p-10">
