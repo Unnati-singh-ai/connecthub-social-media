@@ -49,6 +49,9 @@ INSTALLED_APPS = [
     "django_filters",
     'drf_spectacular',
 
+    "cloudinary_storage",
+    "cloudinary",
+
     'users',
     'posts',
     'comments',
@@ -196,3 +199,15 @@ SIMPLE_JWT = {
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
+
+
+import cloudinary
+
+cloudinary.config(
+    cloud_name=config("CLOUDINARY_CLOUD_NAME"),
+    api_key=config("CLOUDINARY_API_KEY"),
+    api_secret=config("CLOUDINARY_API_SECRET"),
+    secure=True,
+)
+
+DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"

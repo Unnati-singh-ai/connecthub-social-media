@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from cloudinary.models import CloudinaryField
 
 
 class Post(models.Model):
@@ -9,7 +10,13 @@ class Post(models.Model):
         related_name="posts"
     )
     content = models.TextField()
-    image = models.ImageField(upload_to="posts/", blank=True, null=True)
+    
+
+    image = CloudinaryField(
+        "post_image",
+        blank=True,
+        null=True,
+    )
     likes = models.ManyToManyField(
     settings.AUTH_USER_MODEL,
     related_name="liked_posts",
