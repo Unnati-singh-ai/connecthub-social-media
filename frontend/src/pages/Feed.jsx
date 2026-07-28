@@ -18,7 +18,7 @@ function Feed() {
     try {
       const token = localStorage.getItem("access");
 
-      const response = await api.get("/posts/", {
+      const response = await api.get("/posts/feed/", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
